@@ -1,0 +1,42 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+def getDataSource(data_path):
+    marks = []
+    days_present = []
+
+    with open(data_path, "r") as file:
+        data = file.readlines()
+
+    for line in data:
+        mark, days = line.strip().split(",")
+        marks.append(float(mark))
+        days_present.append(float(days))
+
+    return marks, days_present
+
+def findCorrelation(data1, data2):
+    correlation_matrix = np.corrcoef(data1, data2)
+    correlation = correlation_matrix[0, 1]
+    return correlation
+
+def plotFigure(data_path):
+    marks, days_present = getDataSource(data_path)
+
+    plt.scatter(marks, days_present)
+    plt.xlabel("Marks")
+    plt.ylabel("Days Present")
+    plt.title("Marks vs. Days Present")
+    plt.show()
+
+def setup(data_path):
+    marks, days_present = getDataSource(data_path)
+    correlation = findCorrelation(marks, days_present)
+    
+    print("Correlation between Marks and Days Present:", correlation)
+    
+    plotFigure(data_path)
+
+
+data_path = "numpy 1"  
+setup(data_path)
